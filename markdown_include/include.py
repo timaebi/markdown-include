@@ -109,16 +109,14 @@ class IncludePreprocessor(Preprocessor):
                         text.append('')
                     for i in range(len(text)):
                         # Strip the newline, and optionally increase header depth
+                        text[i] = text[i].rstrip('\n')
                         if self.inheritHeadingDepth or self.headingOffset:
                             if HEADING_SYNTAX.search(text[i]):
-                                text[i] = text[i].rstrip('\n')
                                 if self.inheritHeadingDepth:
                                     text[i] = bonusHeading + text[i]
                                 if self.headingOffset:
                                     text[i] = '#' * self.headingOffset + text[i]
-                        else:
-                            text[i] = text[i].rstrip('\n')
-                            
+
                     text[0] = line_split[0] + text[0]
                     text[-1] = text[-1] + line_split[2]
                     lines = lines[:loc] + text + lines[loc+1:]
